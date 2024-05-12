@@ -19,6 +19,9 @@ qt_add_qml_module(appphotos
         Main.qml
         RESOURCES
         QML_FILES PhotoModel.qml
+        SOURCES
+        SOURCES
+        SOURCES photointerface.h photointerface.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

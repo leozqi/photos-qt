@@ -1,8 +1,7 @@
 import QtQuick
 import QtQuick.Controls 2.15
 import QtQuick.Dialogs
-
-
+import com.leozqi.photos
 
 ApplicationWindow {
     width: 640
@@ -12,17 +11,35 @@ ApplicationWindow {
 
     FileDialog {
         id: addImageDialog
-        currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
         onAccepted: image.source = selectedFile
+    }
+
+    FileDialog {
+        id: openAlbumDialog
+        fileMode: FileDialog.OpenFile
+        nameFilters: ["Albums (*.album)"]
+        onAccepted: PhotoInterface.openAlbum(selectedFile)
+    }
+
+    FileDialog {
+        id: saveAlbumDialog
+        fileMode: FileDialog.SaveFile
+        nameFilters: ["Albums (*.album)"]
+        onAccepted: image.source = selectedFile // change this
     }
 
     menuBar: MenuBar {
         Menu {
             title: qsTr("&File")
-            Action { text: qsTr("&New...") }
-            Action { text: qsTr("&Open...") }
-            Action { text: qsTr("&Save") }
-            Action { text: qsTr("Save &As...") }
+            Action {
+                id: actionNewAlbum
+                text: qsTr("&New album...")
+                shortcut: StandardKey.New
+                onTriggered: saveAlbumDialog.open()
+            }
+            Action { text: qsTr("&Open album...") }
+            Action { text: qsTr("&Save album") }
+            Action { text: qsTr("Save album as...") }
             MenuSeparator { }
             Action { text: qsTr("&Quit") }
         }
@@ -31,7 +48,6 @@ ApplicationWindow {
             Action {
                 id: actionAddImg
                 text: qsTr("&Add Image")
-                shortcut: StandardKey.New
                 onTriggered: addImageDialog.open()
             }
         }

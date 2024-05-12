@@ -1,12 +1,18 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
+#include "photointerface.h"
+
+
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/photos/Main.qml"));
+
+    qmlRegisterSingletonType<PhotoInterface>("com.leozqi.photos", 1, 0, "PhotoInterface", &PhotoInterface::qmlInstance);
+
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
@@ -17,3 +23,4 @@ int main(int argc, char *argv[])
 
     return app.exec();
 }
+
