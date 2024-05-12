@@ -25,7 +25,7 @@ ApplicationWindow {
         id: saveAlbumDialog
         fileMode: FileDialog.SaveFile
         nameFilters: ["Albums (*.album)"]
-        onAccepted: image.source = selectedFile // change this
+        onAccepted: PhotoInterface.openAlbum(selectedFile)
     }
 
     menuBar: MenuBar {
@@ -37,7 +37,12 @@ ApplicationWindow {
                 shortcut: StandardKey.New
                 onTriggered: saveAlbumDialog.open()
             }
-            Action { text: qsTr("&Open album...") }
+            Action {
+                id: actionOpenAlbum
+                text: qsTr("&Open album...")
+                shortcut: StandardKey.Open
+                onTriggered: openAlbumDialog.open()
+            }
             Action { text: qsTr("&Save album") }
             Action { text: qsTr("Save album as...") }
             MenuSeparator { }

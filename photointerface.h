@@ -21,9 +21,8 @@ public:
         return new PhotoInterface;
     }
 
+public slots:
     void openAlbum(const QString &path);
-
-signals:
 
 private:
     QSqlDatabase db;

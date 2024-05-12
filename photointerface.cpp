@@ -7,7 +7,8 @@ PhotoInterface::PhotoInterface(QObject *parent)
 
 void PhotoInterface::openAlbum(const QString &path)
 {
-    this->db = QSqlDatabase::addDatabase("QSQLITE");
+    // The file path is both the connection name and the "database name"
+    this->db = QSqlDatabase::addDatabase("QSQLITE", path);
     db.setDatabaseName(path);
 
     if (!db.open()) {
