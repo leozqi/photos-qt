@@ -1,11 +1,20 @@
 import QtQuick
 import QtQuick.Controls 2.15
+import QtQuick.Dialogs
+
+
 
 ApplicationWindow {
     width: 640
     height: 480
     visible: true
     title: qsTr("Hello World")
+
+    FileDialog {
+        id: addImageDialog
+        currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+        onAccepted: image.source = selectedFile
+    }
 
     menuBar: MenuBar {
         Menu {
@@ -19,9 +28,12 @@ ApplicationWindow {
         }
         Menu {
             title: qsTr("&Edit")
-            Action { text: qsTr("Cu&t") }
-            Action { text: qsTr("&Copy") }
-            Action { text: qsTr("&Paste") }
+            Action {
+                id: actionAddImg
+                text: qsTr("&Add Image")
+                shortcut: StandardKey.New
+                onTriggered: addImageDialog.open()
+            }
         }
         Menu {
             title: qsTr("&Help")
@@ -44,3 +56,7 @@ ApplicationWindow {
         }
     }
 }
+
+
+
+
