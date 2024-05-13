@@ -3,6 +3,7 @@
 #include <QtQuick>
 
 #include "photointerface.h"
+#include "datamodel.h"
 
 
 int main(int argc, char *argv[])
@@ -12,6 +13,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/photos/Main.qml"));
 
+    qmlRegisterType<DataModel>("com.leozqi.photos", 1, 0, "DataModel");
     qmlRegisterSingletonType<PhotoInterface>("com.leozqi.photos", 1, 0, "PhotoInterface", &PhotoInterface::qmlInstance);
 
     QObject::connect(
