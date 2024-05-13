@@ -5,6 +5,7 @@ project(photos VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Sql)
+find_package(exiv2 REQUIRED CONFIG NAMES exiv2)
 
 qt_standard_project_setup()
 
@@ -36,7 +37,7 @@ set_target_properties(appphotos PROPERTIES
 )
 
 target_link_libraries(appphotos
-    PRIVATE Qt6::Quick Qt6::Sql
+    PRIVATE Qt6::Quick Qt6::Sql Exiv2::exiv2lib
 )
 
 include(GNUInstallDirs)

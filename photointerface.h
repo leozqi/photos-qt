@@ -12,6 +12,8 @@
 #include <QImage>
 #include <QBuffer>
 
+#include <exiv2/exiv2.hpp>
+
 class PhotoInterface : public QObject
 {
     Q_OBJECT

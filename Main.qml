@@ -12,7 +12,7 @@ ApplicationWindow {
     FileDialog {
         id: addImageDialog
         fileMode: FileDialog.OpenFiles
-        nameFilters: ["Image Files (*.png *.jpg *.jpeg *.bmp *.tiff)"]
+        nameFilters: ["Image Files (*.png *.jpg *.jpeg *.bmp *.tiff *.gif *.pbm *.pgm *.ppm *.xbm *.xpm *.svg)"]
         onAccepted: PhotoInterface.addPhotos(selectedFiles)
     }
 
