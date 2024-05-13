@@ -4,6 +4,13 @@
 #include <QObject>
 #include <QQuickItem>
 #include <QtSql/QSqlDatabase>
+#include <QSqlTableModel>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QFile>
+#include <QImage>
+#include <QBuffer>
 
 class PhotoInterface : public QObject
 {
@@ -23,9 +30,10 @@ public:
 
 public slots:
     void openAlbum(const QString &path);
+    void addPhotos(const QList<QString> &paths);
 
 private:
-    QSqlDatabase db;
+    QString currentAlbum;
 };
 
 #endif // PHOTOINTERFACE_H

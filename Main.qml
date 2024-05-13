@@ -7,11 +7,13 @@ ApplicationWindow {
     width: 640
     height: 480
     visible: true
-    title: qsTr("Hello World")
+    title: qsTr("Photos")
 
     FileDialog {
         id: addImageDialog
-        onAccepted: image.source = selectedFile
+        fileMode: FileDialog.OpenFiles
+        nameFilters: ["Image Files (*.png *.jpg *.jpeg *.bmp *.tiff)"]
+        onAccepted: PhotoInterface.addPhotos(selectedFiles)
     }
 
     FileDialog {
@@ -43,7 +45,6 @@ ApplicationWindow {
                 shortcut: StandardKey.Open
                 onTriggered: openAlbumDialog.open()
             }
-            Action { text: qsTr("&Save album") }
             Action { text: qsTr("Save album as...") }
             MenuSeparator { }
             Action { text: qsTr("&Quit") }
@@ -62,7 +63,8 @@ ApplicationWindow {
         }
     }
 
-    GridView {
+    Control {
+        padding: 50
         anchors {
             left: parent.left
             right: parent.right
@@ -70,12 +72,31 @@ ApplicationWindow {
             bottom: parent.bottom
         }
 
-        model: PhotoModel {}
-        delegate: Column {
-            Image { source: portrait; anchors.horizontalCenter: parent.horizontalCenter }
-            Text { text: name; anchors.horizontalCenter: parent.horizontalCenter }
+        GridView {
+            cellWidth: 110
+            cellHeight: 110
+
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+
+            model: PhotoModel {}
+            delegate: Column {
+                x: 10
+                y: 10
+                width: 100
+                height: 100
+                Image { source: portrait; anchors.horizontalCenter: parent.horizontalCenter }
+                Text { text: name; anchors.horizontalCenter: parent.horizontalCenter }
+            }
         }
+
     }
+
+    Component.onCompleted: openAlbumDialog.open()
 }
 
 
