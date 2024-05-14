@@ -4,6 +4,7 @@
 
 #include "photointerface.h"
 #include "datamodel.h"
+#include "imageprovider.h"
 
 
 int main(int argc, char *argv[])
@@ -15,6 +16,8 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<DataModel>("com.leozqi.photos", 1, 0, "DataModel");
     qmlRegisterSingletonType<PhotoInterface>("com.leozqi.photos", 1, 0, "PhotoInterface", &PhotoInterface::qmlInstance);
+
+    engine.addImageProvider(QLatin1String("imageprovider"), new ImageProvider);
 
     QObject::connect(
         &engine,

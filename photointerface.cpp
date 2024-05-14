@@ -8,7 +8,7 @@ PhotoInterface::PhotoInterface(QObject *parent)
 void PhotoInterface::openAlbum(const QString &path)
 {
     // The file path is both the connection name and the "database name"
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", path);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path);
 
     if (!db.open()) {
@@ -49,7 +49,7 @@ static const Exiv2::TagInfo* findTag(const Exiv2::TagInfo* pList, uint16_t tag) 
 
 void PhotoInterface::addPhotos(const QList<QString> &paths)
 {
-    QSqlDatabase db = QSqlDatabase::database(currentAlbum);
+    QSqlDatabase db = QSqlDatabase::database();
     QByteArray imgData;
     QBuffer imgBuffer(&imgData);
     imgBuffer.open(QIODevice::WriteOnly);

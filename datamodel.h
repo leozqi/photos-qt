@@ -4,6 +4,11 @@
 #include <QObject>
 #include <QtCore>
 #include <QtGui>
+#include <QtSql/QSqlDatabase>
+#include <QSqlTableModel>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
 
 class DataModel : public QAbstractListModel
 {

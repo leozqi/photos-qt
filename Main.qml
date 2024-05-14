@@ -137,8 +137,9 @@ ApplicationWindow {
                     y: 10
                     width: 100
                     height: 100
-                    Image { source: portrait; anchors.horizontalCenter: parent.horizontalCenter }
-                    Text { text: name; anchors.horizontalCenter: parent.horizontalCenter }
+                    Image {
+                        source: "image://imageprovider/" + model.display
+                    }
                 }
             }
         }
