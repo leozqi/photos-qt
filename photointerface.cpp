@@ -77,7 +77,7 @@ void PhotoInterface::addPhotos(const QList<QString> &paths)
         //
         // See: https://doc.qt.io/qt-6/qimagereader.html#supportedImageFormats
         QImage img(localPath);
-        QImage scaled = img.scaled(200, 150, Qt::KeepAspectRatio, Qt::FastTransformation);
+        QImage scaled = img.scaled(125, 125, Qt::KeepAspectRatio, Qt::FastTransformation);
 
         img.save(&imgBuffer, "PNG");
         scaled.save(&thumbBuffer, "PNG");

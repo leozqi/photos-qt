@@ -2,6 +2,7 @@
 #define DATAMODEL_H
 
 #include <QObject>
+#include <QQuickItem>
 #include <QtCore>
 #include <QtGui>
 #include <QtSql/QSqlDatabase>
@@ -10,9 +11,12 @@
 #include <QSqlRecord>
 #include <QSqlError>
 
+#include <exiv2/exiv2.hpp>
+
 class DataModel : public QAbstractListModel
 {
     Q_OBJECT
+    QML_ELEMENT
 public:
     explicit DataModel(QObject *parent = nullptr);
     ~DataModel();
@@ -20,7 +24,9 @@ public:
     virtual int rowCount(const QModelIndex &parent) const;
     virtual QVariant data(const QModelIndex &index, int role) const;
 
-signals:
+public slots:
+    void openAlbum(const QString &path);
+    void addPhotos(const QList<QString> &paths);
 };
 
 #endif // DATAMODEL_H

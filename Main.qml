@@ -5,17 +5,11 @@ import QtQuick.Layouts
 import com.leozqi.photos
 
 ApplicationWindow {
+    id: appWindow
     width: 640
     height: 480
     visible: true
     title: qsTr("Photos")
-
-    FileDialog {
-        id: addImageDialog
-        fileMode: FileDialog.OpenFiles
-        nameFilters: ["Image Files (*.png *.jpg *.jpeg *.bmp *.tiff *.gif *.pbm *.pgm *.ppm *.xbm *.xpm *.svg)"]
-        onAccepted: PhotoInterface.addPhotos(selectedFiles)
-    }
 
     FileDialog {
         id: openAlbumDialog
@@ -26,6 +20,12 @@ ApplicationWindow {
             stack.pop()
             stack.push(albumView)
         }
+    }
+
+    FileDialog {
+        id: addImageDialog
+        fileMode: FileDialog.OpenFiles
+        nameFilters: ["Image Files (*.png *.jpg *.jpeg *.bmp *.tiff *.gif *.pbm *.pgm *.ppm *.xbm *.xpm *.svg)"]
     }
 
     FileDialog {
@@ -121,8 +121,10 @@ ApplicationWindow {
             anchors.rightMargin: 80
 
             GridView {
-                cellWidth: 260
-                cellHeight: 110
+                id: albumGrid
+                model: DataModel {}
+                cellWidth: 250
+                cellHeight: 250
 
                 anchors {
                     left: parent.left
@@ -131,14 +133,20 @@ ApplicationWindow {
                     bottom: parent.bottom
                 }
 
-                model: DataModel {}
                 delegate: Column {
-                    x: 10
-                    y: 10
-                    width: 250
-                    height: 100
+                    x: 50
+                    y: 50
+                    width: 150
+                    height: 150
                     Image {
                         source: "image://imageprovider/" + model.display
+                    }
+                }
+
+                Connections {
+                    target: addImageDialog
+                    onAccepted: {
+                        albumGrid.model.addPhotos(addImageDialog.selectedFiles)
                     }
                 }
             }

@@ -18,9 +18,6 @@ public:
 
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override
     {
-        int width = 200;
-        int height = 150;
-
         QSqlDatabase db = QSqlDatabase::database();
         QSqlQuery q(db);
         q.prepare("SELECT thumbnail FROM photos WHERE id = (?)");
@@ -37,9 +34,6 @@ public:
 
     QPixmap requestPixmap(const QString &id, QSize *size, const QSize &requestedSize) override
     {
-        int width = 200;
-        int height = 150;
-
         QSqlDatabase db = QSqlDatabase::database();
         QSqlQuery q(db);
         q.prepare("SELECT thumbnail FROM photos WHERE id = (?)");
