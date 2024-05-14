@@ -21,14 +21,22 @@ ApplicationWindow {
         id: openAlbumDialog
         fileMode: FileDialog.OpenFile
         nameFilters: ["Albums (*.album)"]
-        onAccepted: PhotoInterface.openAlbum(selectedFile)
+        onAccepted: function() {
+            PhotoInterface.openAlbum(selectedFile)
+            stack.pop()
+            stack.push(albumView)
+        }
     }
 
     FileDialog {
         id: saveAlbumDialog
         fileMode: FileDialog.SaveFile
         nameFilters: ["Albums (*.album)"]
-        onAccepted: PhotoInterface.openAlbum(selectedFile)
+        onAccepted: function() {
+            PhotoInterface.openAlbum(selectedFile)
+            stack.pop()
+            stack.push(albumView)
+        }
     }
 
     menuBar: MenuBar {
@@ -70,67 +78,71 @@ ApplicationWindow {
          anchors.fill: parent
     }
 
-    ColumnLayout {
+    Component {
         id: welcomeView
-        anchors.top: parent.top
-        anchors.topMargin: 50
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: 400
-        height: 300
-        focus: true
+        ColumnLayout {
+            anchors.top: parent.top
+            anchors.topMargin: 80
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 400
+            height: 200
+            focus: true
 
-        Image {
-            Layout.alignment: Qt.AlignHCenter
-            source: "images/photo-album.png"
-        }
+            Image {
+                Layout.alignment: Qt.AlignHCenter
+                source: "images/photo-album.png"
+            }
 
-        Button {
-            Layout.alignment: Qt.AlignHCenter
-            text: qsTr("Create a new album ...")
-            onClicked: saveAlbumDialog.open()
-        }
+            Button {
+                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("Create a new album ...")
+                onClicked: saveAlbumDialog.open()
+            }
 
-        Button {
-            Layout.alignment: Qt.AlignHCenter
-            text: qsTr("Open an album ...")
-            onClicked: openAlbumDialog.open()
+            Button {
+                Layout.alignment: Qt.AlignHCenter
+                text: qsTr("Open an album ...")
+                onClicked: openAlbumDialog.open()
+            }
         }
     }
 
-    // Control {
-    //     padding: 50
-    //     anchors {
-    //         left: parent.left
-    //         right: parent.right
-    //         top: parent.top
-    //         bottom: parent.bottom
-    //     }
+    Component {
+        id: albumView
+        Item {
+            anchors {
+                left: parent.left
+                right: parent.right
+                top: parent.top
+                bottom: parent.bottom
+            }
+            anchors.topMargin: 80
+            anchors.leftMargin: 80
+            anchors.rightMargin: 80
 
-    //     GridView {
-    //         cellWidth: 110
-    //         cellHeight: 110
+            GridView {
+                cellWidth: 110
+                cellHeight: 110
 
-    //         anchors {
-    //             left: parent.left
-    //             right: parent.right
-    //             top: parent.top
-    //             bottom: parent.bottom
-    //         }
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    top: parent.top
+                    bottom: parent.bottom
+                }
 
-    //         model: DataModel {}
-    //         delegate: Column {
-    //             x: 10
-    //             y: 10
-    //             width: 100
-    //             height: 100
-    //             Image { source: portrait; anchors.horizontalCenter: parent.horizontalCenter }
-    //             Text { text: name; anchors.horizontalCenter: parent.horizontalCenter }
-    //         }
-    //     }
-
-    // }
-
-    // Component.onCompleted: openAlbumDialog.open()
+                model: DataModel {}
+                delegate: Column {
+                    x: 10
+                    y: 10
+                    width: 100
+                    height: 100
+                    Image { source: portrait; anchors.horizontalCenter: parent.horizontalCenter }
+                    Text { text: name; anchors.horizontalCenter: parent.horizontalCenter }
+                }
+            }
+        }
+    }
 }
 
 
