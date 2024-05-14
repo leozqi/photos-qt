@@ -121,7 +121,7 @@ ApplicationWindow {
             anchors.rightMargin: 80
 
             GridView {
-                cellWidth: 110
+                cellWidth: 260
                 cellHeight: 110
 
                 anchors {
@@ -135,7 +135,7 @@ ApplicationWindow {
                 delegate: Column {
                     x: 10
                     y: 10
-                    width: 100
+                    width: 250
                     height: 100
                     Image {
                         source: "image://imageprovider/" + model.display

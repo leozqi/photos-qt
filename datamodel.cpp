@@ -29,31 +29,22 @@ QVariant DataModel::data(const QModelIndex &index, int role) const
 {
     // the index returns the requested row and column information.
     // we ignore the column and only use the row information
-    int row = index.row();
+    int row = index.row()+1; // SQLite starts at 1
 
     QSqlDatabase db = QSqlDatabase::database();
+    QSqlQuery q(db);
+    q.prepare("SELECT id FROM photos WHERE id = (?)");
+    q.addBindValue(row);
+    if (!q.exec()) {
+        qDebug() << "Failed to execute query: " << q.lastError().text() << " query was: " << q.executedQuery();
+    }
+    if (!q.next())
+        return QVariant();
 
-    QSqlQuery q("SELECT COUNT(*) FROM photos", db);
-    q.next();
-    return q.value(0).toInt();
-
-
-    // boundary check for the row
-    //if(row < 0 || row >= m_data.count()) {
-    //    return QVariant();
-    //}
-
-    // A model can return data for different roles.
-    // The default role is the display role.
-    // it can be accesses in QML with "model.display"
-    switch(role) {
-    case Qt::DisplayRole:
-        // Return the color name for the particular row
-        // Qt automatically converts it to the QVariant type
-        //return m_data.value(row);
+    switch (role) {
+        case Qt::DisplayRole:
+            return QVariant(q.value(0));
     }
 
-    // The view asked for other data, just return an empty QVariant
     return QVariant();
 }
-
